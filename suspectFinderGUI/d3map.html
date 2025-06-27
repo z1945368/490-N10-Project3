@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>D3 World Map</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      background: #717171;
+      margin: 0;
+      overflow: hidden;
+    }
+    svg {
+      width: 100vw;
+      height: 100vh;
+    }
+    path {
+      fill: #d3d3d3;
+      stroke: #333;
+      stroke-width: 0.5;
+    }
+    .slidecontainer{
+        width: 100%;
+        position: absolute;
+        left: 0;
+        bottom: 10px;
+        z-index: 10;
+        pointer-events: auto;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+    .slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 25px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        background: #04AA6D;
+        cursor: pointer;
+    }
+    .slider::-moz-range-thumb {
+        -moz-appearance: none;
+        width: 25px;
+        height: 25px;
+        background: #04AA6D;
+        cursor: pointer;
+    }
+    /* layout for multiple sliders in one line */
+    .slider-row{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .slider-wrap{
+      box-sizing: border-box;
+    }
+    .slider-wrap.year{ flex: 0 0 100%; }
+    .slider-label{ margin: 0 0 6px 0; font-size: 14px; }
+    /* histogram container */
+    #histogramContainer {
+      width: 100%;
+      height: 120px;
+      margin-top: 10px;
+      border: 1px solid #999;
+      background: #fafafa;
+      box-sizing: border-box;
+    }
+    /* top year display */
+    .top-year{
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 18px;
+      font-weight: 600;
+      z-index: 50;
+      pointer-events: none;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+  </style>
+</head>
+<body>
+  <svg id="map"></svg>
+  <div id="topYearDisplay" class="top-year">Year: 1998 Month: January Week: 1</div>
+  <script src="flatd3map.js"></script>
+<div class="slidecontainer">
+  <div style="margin-bottom: 15px;">
+    <label for="timelineSlider" style="font-size: 14px; font-weight: bold;">Timeline (1998 → 2005)</label>
+    <input type="range" min="0" id="timelineSlider" class="slider" style="width: 100%; margin-top: 1px;">
+  </div>
+  <div id="histogramContainer"></div>
+  <script src="Interactables.js"></script>
+</div>
+</body>
+</html>
