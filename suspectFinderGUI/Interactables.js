@@ -43,6 +43,22 @@ function getWeekIndexFromDate(year, month, week) {
 var reportsData = null;
 var timelineSlider = document.getElementById("timelineSlider");
 var histogramContainer = document.getElementById("histogramContainer");
+// optional highlight weeks passed via localStorage by suspect finder
+var highlightWeeks = null;
+try {
+    var _hw = localStorage.getItem('highlightWeeks');
+    if (_hw) highlightWeeks = JSON.parse(_hw);
+} catch(e){
+    highlightWeeks = null;
+}
+// read suspect name if present
+var highlightSuspect = null;
+try {
+    var _hs = localStorage.getItem('highlightSuspect');
+    if (_hs) highlightSuspect = _hs;
+} catch(e){ highlightSuspect = null; }
+
+var topSuspectDisplay = document.getElementById('topSuspectDisplay');
 
 // initialize timeline slider max value
 var totalWeeks = calculateTotalWeeks();
@@ -119,9 +135,14 @@ function buildHistogram() {
         .attr('y', function(d){ return yScale(d); })
         .attr('width', barWidth)
         .attr('height', function(d){ return height - yScale(d); })
-        .attr('fill', '#4CAF50')
+        .attr('fill', function(d,i){ return (Array.isArray(highlightWeeks) && highlightWeeks.indexOf(i) !== -1) ? '#FF5722' : '#4CAF50'; })
         .on('mouseover', function(event, d){ d3.select(this).attr('fill', '#aedfafff');})
-        .on('mouseout', function(event, d){ d3.select(this).attr('fill', '#4CAF50');})
+        .on('mouseout', function(event, d){ 
+            var all = g.selectAll('.bar').nodes();
+            var idx = all.indexOf(this);
+            var isHighlighted = Array.isArray(highlightWeeks) && highlightWeeks.indexOf(idx) !== -1;
+            d3.select(this).attr('fill', isHighlighted ? '#FF5722' : '#4CAF50');
+        })
 
 
         .attr('stroke', 'none')
@@ -168,6 +189,8 @@ function buildHistogram() {
         .style('font-size', '12px')
         .attr('fill', 'black')
         .text('Report Count');
+    // If there is a highlight request, apply it now
+    applyHighlightAfterBuild();
 }
 
 // timeline slider handler
@@ -248,8 +271,13 @@ function drawMapCircles(allReportsFeaturingDate) {
         }
     });
 
-    // bind points to circle elements on the SVG and update positions
-    var sel = d3.select('svg').selectAll('circle.report-point').data(points, function(d,i){ return d.name + '::' + i; });
+    // bind points to circle elements on the map SVG and update positions
+    var mapSvg = d3.select('#map');
+    if (mapSvg.empty()) {
+        console.error('drawMapCircles: #map SVG not found');
+        return;
+    }
+    var sel = mapSvg.selectAll('circle.report-point').data(points, function(d,i){ return d.name + '::' + i; });
 
     sel.join(
         function(enter){
@@ -423,4 +451,21 @@ function onClickReportCircle(event, d) {
         .on('click', function(){
             d3.select('#map').selectAll('g.detail-box').remove();
         });
+}
+
+// after building histogram, if highlightWeeks present, move slider to first week and dispatch input
+function applyHighlightAfterBuild(){
+    if (Array.isArray(highlightWeeks) && highlightWeeks.length){
+        // set slider to first highlighted week
+        var first = highlightWeeks[0];
+        timelineSlider.value = first;
+        timelineSlider.dispatchEvent(new Event('input', { bubbles: true }));
+        // show suspect name at top-right if provided
+        if (topSuspectDisplay && highlightSuspect) {
+            topSuspectDisplay.textContent = 'Suspect: ' + highlightSuspect;
+        }
+        // remove storage keys so subsequent visits behave normally
+        localStorage.removeItem('highlightWeeks');
+        localStorage.removeItem('highlightSuspect');
+    }
 }

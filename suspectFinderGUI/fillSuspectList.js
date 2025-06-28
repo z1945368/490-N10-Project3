@@ -325,8 +325,9 @@ document.getElementById("planButton").addEventListener("click", function () {
             planKeywords
         );
 
-        // Format readable output <p> category frequency, catefory frequency ... </p>
-        let line = `<p><b>${suspectName}</b> : `;
+        // Make suspect name clickable to jump to map and highlight weeks
+        let safeName = suspectName.replace(/"/g, '&quot;');
+        let line = `<p><a href="#" class="suspect-plan-link" data-name="${safeName}"><b>${suspectName}</b></a> : `;
         let parts = [];
 
         for (let category in plan) {
@@ -343,6 +344,24 @@ document.getElementById("planButton").addEventListener("click", function () {
 
     document.getElementById("planResults").innerHTML = output;
 
+    // Add click handlers for suspect links to compute weeks and navigate to map
+    document.querySelectorAll('.suspect-plan-link').forEach(function(el){
+        el.addEventListener('click', function(evt){
+            evt.preventDefault();
+            const name = this.getAttribute('data-name');
+            const weeks = computeWeeksForSuspect(name);
+            if (weeks && weeks.length){
+                localStorage.setItem('highlightWeeks', JSON.stringify(weeks));
+                localStorage.setItem('highlightSuspect', name);
+            } else {
+                localStorage.removeItem('highlightWeeks');
+                localStorage.removeItem('highlightSuspect');
+            }
+            // navigate to the map page
+            window.location.href = 'd3map.html';
+        });
+    });
+
     const suspectPlans = document.getElementById("planResults");
     suspectPlans.scrollIntoView({behavior:"smooth"}); // Scrolls to text location of element.
 
@@ -352,3 +371,33 @@ document.getElementById("planButton").addEventListener("click", function () {
   ///////////////////////////////End What they want to do /////////////////////////////////
 
   run();
+
+// Compute week indices for a suspect based on report dates
+function computeWeeksForSuspect(suspectName){
+    const TIMELINE_START_YEAR = 1998;
+    const WEEKS_PER_MONTH = 4;
+    const MONTHS_PER_YEAR = 12;
+    const weeks = new Set();
+    const reportIDs = suspectReports.get(suspectName);
+    if (!reportIDs) return [];
+    reportIDs.forEach(reportID => {
+        const report = fullReports.get(reportID);
+        if (!report || !report.DATES) return;
+        report.DATES.forEach(ds => {
+            if (!ds || typeof ds !== 'string') return;
+            const m = ds.match(/(\d{1,2})\D+(\d{1,2})\D+(\d{4})/);
+            if (!m) return;
+            const mm = parseInt(m[1],10) - 1; // 0-based month
+            const dd = parseInt(m[2],10);
+            const yy = parseInt(m[3],10);
+            if (isNaN(mm) || isNaN(dd) || isNaN(yy)) return;
+            const week = Math.ceil(dd / 7);
+            const yearOffset = (yy - TIMELINE_START_YEAR) * MONTHS_PER_YEAR * WEEKS_PER_MONTH;
+            const monthOffset = mm * WEEKS_PER_MONTH;
+            const weekIndex = yearOffset + monthOffset + (week - 1);
+            if (weekIndex >= 0) weeks.add(weekIndex);
+        });
+    });
+    // return sorted array
+    return Array.from(weeks).sort((a,b)=>a-b);
+}
