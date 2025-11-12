@@ -1,0 +1,96 @@
+/* Suspect Finder CSS */
+
+/* Variables */
+:root {
+    --background-color: #d7d7d7;
+    --suspect-collapse-background: #a6a5a2;
+    --suspect-extended-background: #bfbfbf;
+    --border-color: #000000;
+
+    --suspect-name-font-size: 22px;
+    --report-list-title-font-size: 18px;
+}
+
+
+
+/* Standard HTML elements */
+* {
+    font-family: 'Courier New', Courier, monospace;
+    
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+h1 {
+    text-align: center;
+}
+
+
+
+/* Custom Class CSS */
+    /* Primary Suspect Page */
+.displayedArea{
+    border: 1px solid var(--border-color); /* Display when suspect name clicked, otherwise no border */
+}
+
+.suspectLabel {
+    font-size: var(--suspect-name-font-size);
+    width: 15%;
+    padding-left: 5%;
+    padding-right: 25%;
+    
+}
+
+.suspectLabel:hover {
+    color: var(--background-color);
+    text-decoration: underline;
+}
+
+.reportList {
+    list-style: none;
+}
+
+.collapsible {
+    background-color: var(--suspect-collapse-background);
+}
+
+.extendableArea { /* This is the CSS for the area that will be extended once the suspect's name is clicked */
+    display: none; /* None by default to hide from user until clicked */
+    background-color: var(--suspect-extended-background);
+    border: 1px solid var(--border-color);
+}
+
+.fullExtendedArea {
+    display: block;
+}
+
+.reportListItem {
+    font-size: var(--report-list-title-font-size);
+}
+
+    /* Report Page */
+
+.reportTitleBar {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.reportTitle {
+    display: inline;
+}
+
+.reportLabel {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Custom ID CSS */
+
+    /* Suspect Page IDs */
+#filterSuspectButton {
+    align-self: flex-end;
+}
+
+    /* Report Page IDS */
