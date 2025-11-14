@@ -5,6 +5,7 @@
     --background-color: #d7d7d7;
     --suspect-collapse-background: #a6a5a2;
     --suspect-extended-background: #bfbfbf;
+    --report-hover-coler: #ffffff;
     --border-color: #000000;
 
     --suspect-name-font-size: 22px;
@@ -44,7 +45,7 @@ h1 {
 }
 
 .suspectLabel:hover {
-    color: var(--background-color);
+    color: var(--report-hover-coler);
     text-decoration: underline;
 }
 
@@ -56,13 +57,13 @@ h1 {
     background-color: var(--suspect-collapse-background);
 }
 
-.extendableArea { /* This is the CSS for the area that will be extended once the suspect's name is clicked */
+.extendableAreaCollapse { /* This is the CSS for the area that will be extended once the suspect's name is clicked */
     display: none; /* None by default to hide from user until clicked */
     background-color: var(--suspect-extended-background);
     border: 1px solid var(--border-color);
 }
 
-.fullExtendedArea {
+.extendableAreaExpand {
     display: block;
 }
 
@@ -70,7 +71,18 @@ h1 {
     font-size: var(--report-list-title-font-size);
 }
 
+.reportListItem:hover {
+    color: var(--report-hover-coler);
+    text-decoration: underline;
+}
+
     /* Report Page */
+.popUpWindow {
+    width: 100%;
+    height: 100%;
+    z-index: 999; /* Must be on top */
+    border: 1px solid var(--border-color);
+}
 
 .reportTitleBar {
     width: 40%;
@@ -94,3 +106,8 @@ h1 {
 }
 
     /* Report Page IDS */
+
+#reportPopUp {
+    width: 85%;
+    height: 80%;
+}

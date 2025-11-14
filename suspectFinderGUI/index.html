@@ -8,62 +8,28 @@
     <body>
         <h1>Suspect Finder</h1>
         <button id="filterSuspectButton">Filter Suspects</button>
+        <label class="reportLabel" for="suspectCounter">Saved Suspects:</label>
+        <label class="reportLabel" id="suspectCounter">(None)</label>
+
+        <dialog id="reportPopUp">
+            <button id="returnButton">Return to Suspects</button>
+            <iframe class="popUpWindow" src="/suspectFinderGUI/pages/reportPopup.html" frameborder="0"></iframe>
+        </dialog>
+
         <section class="suspectListArea">
             <ol>
-                <li class="suspectListItem">
+                <li class="suspectListItem" >
                     <div class="collapsible">
                         <div class="displayedArea">
                             <label class="suspectLabel" id="suspectLabel#">Suspect Name</label>
                             <button class="suspectButton" id="saveSuspectButton">Save</button>
                             <button class="suspectButton" id="removeSuspectButton">Remove</button>
                         </div>    
-                        <div class="extendableArea" id="suspectReports#">
+                        <div class="extendableAreaCollapse" id="suspectReports#">
                             <ul class="reportList">
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <br>
-                </li>    
-
-                <li class="suspectListItem">
-                    <div class="collapsible">
-                        <div class="displayedArea">
-                            <label class="suspectLabel" id="suspectLabel#">Suspect Name</label>
-                            <button class="suspectButton" id="saveSuspectButton">Save</button>
-                            <button class="suspectButton" id="removeSuspectButton">Remove</button>
-                        </div>    
-                        <div class="extendableArea" id="suspectReports#">
-                            <ul class="reportList">
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <br>
-                </li>    
-
-                <li class="suspectListItem">
-                    <div class="collapsible">
-                        <div class="displayedArea">
-                            <label class="suspectLabel" id="suspectLabel#">Suspect Name</label>
-                            <button class="suspectButton" id="saveSuspectButton">Save</button>
-                            <button class="suspectButton" id="removeSuspectButton">Remove</button>
-                        </div>    
-                        <div class="extendableArea" id="suspectReports#">
-                            <ul class="reportList">
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
-                                <li class="reportListItem">Report #</li>
+                                <li class="reportListItem" id="report#1">Report #</li>
+                                <li class="reportListItem" id="report#2">Report #</li>
+                                <li class="reportListItem" id="report#3">Report #</li>
                             </ul>
                         </div>
                     </div>
