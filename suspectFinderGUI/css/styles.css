@@ -8,8 +8,8 @@
     --report-hover-coler: #ffffff;
     --border-color: #000000;
 
-    --suspect-name-font-size: 22px;
-    --report-list-title-font-size: 18px;
+    --suspect-name-font-size: 25px;
+    --report-list-title-font-size: 20px;
 }
 
 
@@ -34,14 +34,16 @@ h1 {
     /* Primary Suspect Page */
 .displayedArea{
     border: 1px solid var(--border-color); /* Display when suspect name clicked, otherwise no border */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
 }
 
 .suspectLabel {
     font-size: var(--suspect-name-font-size);
-    width: 15%;
+    width: 80%;
     padding-left: 5%;
-    padding-right: 25%;
-    
 }
 
 .suspectLabel:hover {
@@ -97,6 +99,15 @@ h1 {
     font-size: 18px;
     font-weight: bold;
 }
+
+.suspectButtons {
+    margin: 10px;
+}
+
+.suspectListItme {
+
+}
+
 
 /* Custom ID CSS */
 
