@@ -1,5 +1,5 @@
 // Expand/Collapse list of reports for a given suspect
-const collapseSuspectLabelButton = document.getElementById("suspectLabel#");
+const collapseSuspectLabelButton = document.getElementsByClassName("suspectLabel");
 const collapseSuspectReports = document.getElementById("suspectReports#");
 
 collapseSuspectLabelButton.addEventListener( // Listener to expand/collapse the report list.
@@ -8,6 +8,8 @@ collapseSuspectLabelButton.addEventListener( // Listener to expand/collapse the 
         collapseSuspectReports.classList.toggle("extendableAreaExpand");
     }
 );
+
+
 
 // Open/Close pop up window for report
 const reportLabelButton = document.getElementById("report#1");
