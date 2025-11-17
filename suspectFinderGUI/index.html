@@ -8,7 +8,7 @@
     <body>
         <h1>Suspect Finder</h1>
         <button id="filterSuspectButton">Filter Suspects</button>
-        <label class="reportLabel" for="suspectCounter">Saved Suspects:</label>
+        <label class="reportLabel" for="suspectCounter">Suspects:</label>
         <label class="reportLabel" id="suspectCounter">(None)</label>
 
         <dialog id="reportPopUp">
@@ -18,32 +18,12 @@
 
         <section class="suspectListArea">
             <ol id="suspectList">
-                
-<!--                
-                <li class="suspectListItem" >
-                    <div class="collapsible">
-                        <div class="displayedArea">
-                            <label class="suspectLabel" id="suspectLabel#">Suspect Name</label>
-                            <button class="suspectButton" id="saveSuspectButton">Save</button>
-                            <button class="suspectButton" id="removeSuspectButton">Remove</button>
-                        </div>    
-                        <div class="extendableAreaCollapse" id="suspectReports#">
-                            <ul class="reportList">
-                                <li class="reportListItem" id="report#1">Report #</li>
-                                <li class="reportListItem" id="report#2">Report #</li>
-                                <li class="reportListItem" id="report#3">Report #</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <br>
-                </li>    
--->
-
+                <!-- Filled with JavaScript "fillSuspectList.js"-->
             </ol>
-            <script src="/suspectFinderGUI/js/fillSuspectList.js"></script>    
         </section>    
     </body>
     <footer>
+        <script src="/suspectFinderGUI/js/fillSuspectList.js"></script>
         <script src="/suspectFinderGUI/js/suspectReport.js"></script>
     </footer>
 </html>

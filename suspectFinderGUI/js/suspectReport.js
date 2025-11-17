@@ -9,8 +9,6 @@ collapseSuspectLabelButton.addEventListener( // Listener to expand/collapse the 
     }
 );
 
-
-
 // Open/Close pop up window for report
 const reportLabelButton = document.getElementById("report#1");
 const popUpReturnButton = document.getElementById("returnButton");
