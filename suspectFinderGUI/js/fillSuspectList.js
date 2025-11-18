@@ -189,7 +189,6 @@ function aliases(name){ // Function handles names with aliases (Alias names were
 
 function getPersonsFromJSON(data) { // Fill the map of suspects from the data
     var personMap = new Map();
-
     data.forEach(report => {
         fullReports.set(report.ID,report);
         report.PERSONS.forEach(suspect => {
@@ -200,7 +199,9 @@ function getPersonsFromJSON(data) { // Fill the map of suspects from the data
             }
             else {
                 personMap.set(person, personMap.get(person)+1);
-                suspectReports.get(person).push(report.ID);
+                if(!suspectReports.get(person).includes(report.ID)){
+                    suspectReports.get(person).push(report.ID);
+                }
             }
         });
     });
