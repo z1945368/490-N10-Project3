@@ -133,7 +133,7 @@ function addButtonListenersToSuspects(){ // Add button listeners to buttons
     });
 }
 
-function fillReportPopUp(report){
+function fillReportPopUp(report){ // Fills the data for the report pop up
     const popUpTitle = document.getElementById("reportTitleID");
     const popUpDate = document.getElementById("reportDate");
     const popUpRef = document.getElementById("referencedReport");
@@ -157,12 +157,43 @@ function fillReportPopUp(report){
     popUpDescript.textContent = (report.REPORTDESCRIPTION);
 }
 
+function aliases(name){ // Function handles names with aliases (Alias names were obtained by ai scanning for aliases)
+    var suspect = name;
+
+    switch (suspect) {
+        case "Abu Hafs":    
+        case "Mehdi Rafiki":
+            suspect = "Abdillah Zinedine"
+            break;
+        case "Omar Blakely":    
+            suspect = "Rifai Qasim";
+            break;
+        case "Fr. Augustin Dominique":    
+            suspect = "Abdal al Hawsawi";
+            break;
+        case "Shadi abu Hoshar":    
+            suspect = "Mousa Salah";
+            break;
+        case "Reginald Cooper":    
+            suspect = "Mahmud al-Dahab";
+            break;
+        case "Ralph Bean":    
+            suspect = "Raeed Beandali";
+            break;
+    
+        default:
+            break;    
+    }
+    return suspect;
+}
+
 function getPersonsFromJSON(data) { // Fill the map of suspects from the data
     var personMap = new Map();
 
     data.forEach(report => {
         fullReports.set(report.ID,report);
-        report.PERSONS.forEach(person => {
+        report.PERSONS.forEach(suspect => {
+            const person = aliases(suspect);
             if (!personMap.has(person)) {
                 personMap.set(person,1);
                 suspectReports.set(person,[report.ID]);
