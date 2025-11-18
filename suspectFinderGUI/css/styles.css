@@ -83,12 +83,13 @@ h1 {
     width: 80%;
     height: 100%;
     z-index: 999; /* Must be on top */
+    background-color: var(--background-color);
     border: 1px solid var(--border-color);
 }
 
 .reportTitleBar {
-    width: 40%;
-    margin: 0 auto;
+    width: 30%;
+
 }
 
 .reportTitle {

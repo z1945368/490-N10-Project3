@@ -1,6 +1,7 @@
 // Link JSON to files
 var suspectReports = new Map();
 var fullReports = new Map();
+var savedSuspect = new Set();
 
 async function getJSONData(data) { // Get JSON data and send to html file
     const listBody = document.getElementById("suspectList");
@@ -26,14 +27,15 @@ function getSuspectList(personMap){ // Gets the list of the suspects
 function buildSuspectItem(key,value){ // Returns the formatted suspectItem
     const suspectItem = document.createElement("li");
     suspectItem.id = `suspectListItem${key}`;
+    suspectItem.className = 'suspectListItem';
     
     suspectItem.innerHTML = `
         <div class="collapsible" id="collapsible${key}">
             <div class="displayedArea">
                 <label class="suspectLabel"> ${key} (${value} report(s)) </label>
                 <div class="suspectButtons"> 
-                    <button class="suspectButton" id="saveSuspectButton">Save</button>
-                    <button class="suspectButton" id="removeSuspectButton">Remove</button>
+                    <button class="suspectButton" id="saveSuspectButton${key}">Save</button>
+                    <button class="suspectButton" id="removeSuspectButton${key}">Remove</button>
                 </div>
             </div>    
             <div class="extendableAreaCollapse" id="suspectReports${key}">
@@ -55,16 +57,55 @@ function buildReportListItem(reportID){
     return reportItem;
 }
 
-function addButtonListenersToSuspects(){
-    suspectReports.forEach((reports, key)=>{
+function removeSuspectItem(key){ // Removes the suspect list item given the key
+    document.getElementById(`suspectListItem${key}`).remove();
+    suspectReports.delete(key);
+    setSuspectCount(suspectReports.size);
+}
+
+function addButtonListenersToSuspects(){ // Add button listeners to buttons
+    const filterSuspectsButton = document.getElementById("filterSuspectButton");
+    const suspectString = "suspectListItem";
+    filterSuspectsButton.addEventListener(
+        "click",
+        function (){
+            const suspectListElements = Array.from(document.getElementsByClassName(suspectString));
+            suspectListElements.forEach(collapsible => {
+                if (!savedSuspect.has(collapsible.id)){
+                    var tempString = collapsible.id;
+                    tempString = tempString.substring(suspectString.length);
+                    removeSuspectItem(tempString);
+
+                }
+            });
+        }
+    );
+
+    suspectReports.forEach((reports, key) => {
         const suspectLabelButton = document.getElementById(`suspectListItem${key}`);
         const suspectReportExpandable = document.getElementById(`suspectReports${key}`);
         const suspectReportList = document.getElementById(`reportList${key}`);
+        const suspectSaveButton = document.getElementById(`saveSuspectButton${key}`);
+        const suspectRemoveButton = document.getElementById(`removeSuspectButton${key}`);
 
         suspectLabelButton.addEventListener( // Turns label into drop down menu
             "click",
             function (){
                 suspectReportExpandable.classList.toggle("extendableAreaExpand");
+            }
+        );
+
+        suspectSaveButton.addEventListener( // Saves a suspect to a list
+            "click",
+            function (){
+                savedSuspect.add(`suspectListItem${key}`);
+            }
+        );
+
+        suspectRemoveButton.addEventListener( // Removes a list item from the suspect list
+            "click",
+            function (){
+                removeSuspectItem(key);
             }
         );
 
@@ -90,8 +131,6 @@ function addButtonListenersToSuspects(){
             );
         });
     });
-
-
 }
 
 function fillReportPopUp(report){
