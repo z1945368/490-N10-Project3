@@ -10,16 +10,14 @@ async function getJSONData(data) { // Get JSON data and send to html file
     setSuspectCount(suspectArray.length);
 
     suspectArray.forEach(([name,value]) => {
-        listBody.appendChild(buildSuspectItem(name,value));
+        listBody.appendChild(buildSuspectItem(name,value.length));
     });
 }
 
 function getSuspectList(personMap){ // Gets the list of the suspects
     var suspectListArray = Array.from(personMap);
 
-    suspectListArray.sort((a,b) => b[1] - a[1]);
-
-    // suspectListArray = suspectListArray.filter(([name,value]) => value >= 2); // Remove all the suspects with a single report.
+    suspectListArray.sort((a,b) => b[1].length - a[1].length);
 
     return suspectListArray;
 }
@@ -206,7 +204,7 @@ function getPersonsFromJSON(data) { // Fill the map of suspects from the data
         });
     });
 
-    return personMap
+    return suspectReports
 }
 
 function setSuspectCount(suspectCount){ // Set the displayed counter of suspects
