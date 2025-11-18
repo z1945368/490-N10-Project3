@@ -11,9 +11,46 @@
         <label class="reportLabel" for="suspectCounter">Suspects:</label>
         <label class="reportLabel" id="suspectCounter">(None)</label>
 
-        <dialog id="reportPopUp">
+        <dialog id="reportPopUp" class="popUpWindow">
             <button id="returnButton">Return to Suspects</button>
-            <iframe class="popUpWindow" src="/suspectFinderGUI/pages/reportPopup.html" frameborder="0"></iframe>
+            <div class="reportTitleBar" >
+                <h2 class="reportTitle" id="reportTitleID">Report</h2>
+            </div>
+            <br>
+            
+            <label class="reportLabel">Report Date:</label>
+            <label class="reportLabelInfo" id="reportDate">(Date)</label>
+            <br>
+    
+            <label class="reportLabel">Referenced Report:</label>
+            <label class="reportLabelInfo" id="referencedReport">(None)</label>
+            <br>
+    
+            <label class="reportLabel">Source:</label>
+            <label class="reportLabelInfo" id="reportSource">(Report Source)</label>
+            <br>
+    
+            <label class="reportLabel">Individuals Involved:</label>
+            <label class="reportLabelInfo" id="reportIndividuals">(List of Individuals Associated)</label>
+            <br>
+    
+            <label class="reportLabel">Places:</label>
+            <label class="reportLabelInfo" id="reportPlaces">(List of Places Associated)</label>
+            <br>
+    
+            <label class="reportLabel">Important Dates:</label>
+            <label class="reportLabelInfo" id="reportDates">(List of Dates Associated)</label>
+            <br>
+    
+            <label class="reportLabel">Organizations:</label>
+            <label class="reportLabelInfo" id="reportOrgs">(List of Organizations Associated)</label>
+            <br>
+    
+            <label class="reportLabel">Description:</label>
+            <p class="descriptionText" id="reportDescription">
+                (Full Report Description Here)
+            </p>
+
         </dialog>
 
         <section class="suspectListArea">
@@ -24,6 +61,5 @@
     </body>
     <footer>
         <script src="/suspectFinderGUI/js/fillSuspectList.js"></script>
-        <script src="/suspectFinderGUI/js/suspectReport.js"></script>
     </footer>
 </html>
