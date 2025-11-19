@@ -326,7 +326,7 @@ document.getElementById("planButton").addEventListener("click", function () {
         );
 
         // Format readable output <p> category frequency, catefory frequency ... </p>
-        let line = `<p><b>${suspectName}</b> → `;
+        let line = `<p><b>${suspectName}</b> : `;
         let parts = [];
 
         for (let category in plan) {
