@@ -221,4 +221,130 @@ async function run(){ // Essentially the main function
     addButtonListenersToSuspects();
 }
 
-run();
+
+ ///////////////////////////////What they want to do /////////////////////////////////
+
+// Categories and keywords
+const planKeywords = {
+
+    Travel: [
+      "flight","airport","arrived","departed","travel",
+      "ticket","rented","car","bus","crossing","airline"
+    ],
+  
+    IdentityFraud: [
+      "passport","alias","identity","license","fake",
+      "forged","fraud","documents","id","impersonat"
+    ],
+  
+    Explosives: [
+      "semtex","explosive","c-4","detonator","bomb",
+      "chemical weapons","weapon","materials"
+    ],
+  
+    SuspiciousFinance: [
+      "bank","account","deposit","payment","funding",
+      "money","transfer","bmi","diamonds",
+      "scholarship","cash","withdrawal"
+    ],
+  
+    OrgLinks: [
+      "hezbollah","militant","Taliban","Al Qaeda", "radical","organization","group","training"
+    ],
+  
+    Evasion: [
+      "abandoned","never returned","vacant",
+      "unoccupied","missing","disappeared"
+    ],
+  
+    IllegalEntry: [
+      "illegal entry","border","smuggling",
+      "crossed","undocumented","entry"
+    ],
+  
+    Surveillance: [
+      "scouting","observing","surveillance",
+      "diagrams","maps","photographs","target"
+    ],
+  
+    Communication: [
+      "message","call","note","contact","instructions"
+    ]
+  };
+  
+ 
+
+function analyzeSuspectPlan(suspectName, suspectReports, fullReports, planKeywords) {
+
+//suspectReports:	suspect name ->	list of report IDs	
+//fullReports	report ID	 -> full report object
+// counteres category -> frequency
+    let counters = {};
+
+    // Initialize counters
+    for (let cat in planKeywords) {
+        counters[cat] = 0;
+    }
+    // reportIDs Array of name strings
+    const reportIDs = suspectReports.get(suspectName);
+
+    reportIDs.forEach(reportID => {
+        const report = fullReports.get(reportID);
+        const text = report.REPORTDESCRIPTION.toLowerCase();
+
+        for (let category in planKeywords) {
+            
+            let categoryScore = 0;
+
+            planKeywords[category].forEach(keyword => {
+                if (text.includes(keyword)) {
+                    categoryScore += 1;   // DISTINCT keyword found
+                }
+            });
+        // Add distinct keyword count
+        if (categoryScore > 0) {
+         counters[category] += categoryScore;
+    }
+        }
+    });
+
+    return counters;
+}
+
+
+document.getElementById("planButton").addEventListener("click", function () {
+    //output will hold the final report of what each suspect will do
+    let output = "<h2>Suspect Plans</h2>";
+
+    //loop through all the suspects and call analyzeSuspectPlan 
+    suspectReports.forEach((reportList, suspectName) => {
+        const plan = analyzeSuspectPlan(
+            suspectName,
+            suspectReports,
+            fullReports,
+            planKeywords
+        );
+
+        // Format readable output <p> category frequency, catefory frequency ... </p>
+        let line = `<p><b>${suspectName}</b> → `;
+        let parts = [];
+
+        for (let category in plan) {
+            if (plan[category] > 0) {
+                parts.push(`${category} (${plan[category]})`);
+            }
+        }
+
+        line += parts.join(", ");
+        line += "</p>";
+
+        output += line;
+    });
+
+    document.getElementById("planResults").innerHTML = output;
+ 
+});
+
+  ///////////////////////////////End What they want to do /////////////////////////////////
+
+  run();
