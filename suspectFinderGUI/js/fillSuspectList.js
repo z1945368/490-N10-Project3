@@ -342,6 +342,10 @@ document.getElementById("planButton").addEventListener("click", function () {
     });
 
     document.getElementById("planResults").innerHTML = output;
+
+    const suspectPlans = document.getElementById("planResults");
+    suspectPlans.scrollIntoView({behavior:"smooth"}); // Scrolls to text location of element.
+
  
 });
 
