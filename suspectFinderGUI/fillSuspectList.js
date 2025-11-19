@@ -214,7 +214,7 @@ function setSuspectCount(suspectCount){ // Set the displayed counter of suspects
 }
 
 async function run(){ // Essentially the main function
-    const file = await fetch("/suspectFinderGUI/json/reports.json");
+    const file = await fetch("reports.json");
     const data = await file.json();
 
     getJSONData(data);
